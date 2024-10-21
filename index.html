@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extemp Prep Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Extemp Prep Tracker</h1>
+        <div class="selector">
+            <label>
+                <input type="radio" name="category" id="equalPrepToggle" checked> Equal Prep
+            </label>
+            <label>
+                <input type="radio" name="category" id="usIntlToggle"> United States and International
+            </label>
+        </div>
+        <div class="speaker-count">
+            <label for="speakerCount">Number of Speakers:</label>
+            <select id="speakerCount">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+            </select>
+        </div>
+        <div class="grid">
+            <div class="category equalPrep" id="equalPrepSpeakers">
+                <h2>Equal Prep Speakers</h2>
+                <div class="speakers" id="equalSpeakers"></div>
+            </div>
+
+            <div class="category usIntl" id="usIntlSpeakers" style="display: none;">
+                <h2>Speakers</h2>
+                <div class="columns">
+                    <div class="column">
+                        <h3>United States Speakers</h3>
+                        <div class="speakers" id="usSpeakers"></div>
+                    </div>
+                    <div class="column">
+                        <h3>International Speakers</h3>
+                        <div class="speakers" id="intlSpeakers"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="resetAllBtn">Reset All</button>
+    </div>
+
+    <div id="resetModal" class="modal">
+        <div class="modal-content">
+            <p style="color: red; font-weight: bold;">Type "RESET" to confirm:</p>
+            <input type="text" id="resetInput" />
+            <button id="confirmReset">Confirm Reset</button>
+            <button id="cancelReset">Cancel</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
