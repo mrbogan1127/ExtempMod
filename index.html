@@ -7,6 +7,48 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <style>
+        /* Style for the menu bar container */
+        .menu-bar {
+            background-color: #333; /* Dark background */
+            overflow: hidden; /* Clear floating elements */
+        }
+
+        /* Style for the list items */
+        .menu-bar ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex; /* Arrange items in a row */
+        }
+
+        /* Style for the links */
+        .menu-bar li {
+            margin: 0;
+        }
+
+        .menu-bar a {
+            display: block;
+            padding: 14px 20px;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        /* Hover effect */
+        .menu-bar a:hover {
+            background-color: #575757;
+        }
+    </style>
+    <!-- Menu Bar -->
+    <nav class="menu-bar">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
     <div class="container">
         <h1>Extemp Prep Tracker</h1>
         <div class="selector">
