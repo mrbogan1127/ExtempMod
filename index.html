@@ -1,106 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Extemp Prep Tracker</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#193e35">
+  <title>Extemp · Prep room</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <script src="rounds.js" defer></script>
+  <script src="room-tools.js" defer></script>
+  <script src="script.js" defer></script>
+  <script src="device.js" defer></script>
 </head>
 <body>
-    <style>
-        /* Style for the menu bar container */
-        .menu-bar {
-            background-color: #333; /* Dark background */
-            overflow: hidden; /* Clear floating elements */
-        }
-
-        /* Style for the list items */
-        .menu-bar ul {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-            display: flex; /* Arrange items in a row */
-        }
-
-        /* Style for the links */
-        .menu-bar li {
-            margin: 0;
-        }
-
-        .menu-bar a {
-            display: block;
-            padding: 14px 20px;
-            color: white;
-            text-decoration: none;
-            text-align: center;
-        }
-
-        /* Hover effect */
-        .menu-bar a:hover {
-            background-color: #575757;
-        }
-    </style>
-    <!-- Menu Bar -->
-    <nav class="menu-bar">
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="Jeopardy.html">Extemp Practice</a></li>
-        </ul>
-    </nav>
-    <div class="container">
-        <h1>Extemp Prep Tracker</h1>
-        <div class="selector">
-            <label>
-                <input type="radio" name="category" id="equalPrepToggle" checked> Equal Prep
-            </label>
-            <label>
-                <input type="radio" name="category" id="usIntlToggle"> United States and International
-            </label>
-        </div>
-        <div class="speaker-count">
-            <label for="speakerCount">Number of Speakers:</label>
-            <select id="speakerCount">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-            </select>
-        </div>
-        <div class="grid">
-            <div class="category equalPrep" id="equalPrepSpeakers">
-                <h2>Equal Prep Speakers</h2>
-                <div class="speakers" id="equalSpeakers"></div>
-            </div>
-
-            <div class="category usIntl" id="usIntlSpeakers" style="display: none;">
-                <h2>Speakers</h2>
-                <div class="columns">
-                    <div class="column">
-                        <h3>United States Speakers</h3>
-                        <div class="speakers" id="usSpeakers"></div>
-                    </div>
-                    <div class="column">
-                        <h3>International Speakers</h3>
-                        <div class="speakers" id="intlSpeakers"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <button id="resetAllBtn">Reset All</button>
-    </div>
-
-    <div id="resetModal" class="modal">
-        <div class="modal-content">
-            <p style="color: red; font-weight: bold;">Type "RESET" to confirm:</p>
-            <input type="text" id="resetInput" />
-            <button id="confirmReset">Confirm Reset</button>
-            <button id="cancelReset">Cancel</button>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+  <header class="topbar"><a class="brand" href="index.html"><span class="brand-mark">e.</span> extemp<span class="brand-divider">/</span><span class="brand-sub">The prep room</span></a><span class="save-state" id="saveState">Saved on this device</span></header>
+  <main>
+    <p id="saveProblem" class="storage-notice" role="alert" hidden>Changes are not saved on this device. Return to Tournament & rounds and export a backup before closing.</p>
+    <section id="welcomeScreen" class="welcome-screen" aria-label="Tournament setup">
+    <div class="home-heading"><div><p class="eyebrow">TOURNAMENT DESK</p><h1>Ready for the next round.</h1><p class="subtitle">Your schedule and prep room, in one place.</p></div><button id="newTournament" class="quiet-button">New tournament</button></div>
+    <div class="tournament-picker"><label><span class="field-label">Tournament</span><select id="tournamentSelect"></select></label><details class="rename-tournament"><summary>Rename</summary><label><span class="field-label">Tournament name</span><input id="tournamentName" maxlength="100"></label></details></div>
+    <div class="welcome-continue"><div><p class="eyebrow">PICK UP WHERE YOU LEFT OFF</p><strong id="welcomeRoundTitle"></strong><p id="welcomeRoundStatus"></p></div><button id="continueRound" class="primary">Continue round →</button></div>
+    <p id="storageNotice" class="storage-notice" role="status" hidden></p>
+    <section class="schedule-panel" aria-label="Tournament round schedule"><div class="monitor-heading"><h2>Your rounds</h2><button id="addScheduledRound" class="quiet-button">+ Add round</button></div><p class="schedule-help">Open a round to run prep. Choose Edit settings to change its schedule or format. Times are local to this device.</p><div id="roundSchedule"></div><p id="scheduleMessage" role="status"></p></section>
+    <details class="backup-tools"><summary>Backups & device setup</summary><p>Rounds save automatically on this device. Export a backup to keep a copy in Files or move it between your Mac and iPad. Import adds saved rounds without replacing your current ones.</p><div class="round-buttons"><button id="exportBackup" class="quiet-button">Export backup</button><label class="file-button">Import backup<input id="importBackup" type="file" accept=".json,application/json"></label></div><p id="backupStatus" role="status"></p><p id="offlineStatus">Offline setup requires the hosted HTTPS website.</p><p>On iPad: open the hosted site in Safari, then Share → Add to Home Screen. Use that same app each time. Safari and Home Screen storage may be separate; use a backup to transfer rounds.</p><p>On Mac: use your browser. With Sidecar, move this browser window to your iPad; the Mac still runs and saves the round. Keep the page visible for warnings.</p></details>
+    </section>
+    <section id="prepWorkspace" hidden>
+    <div class="workspace-nav"><div><span id="activeTournament"></span><strong id="activeRound"></strong></div><button id="openWelcome" class="quiet-button">Tournament & rounds</button></div>
+    <section class="room-header"><div><h2>Your prep room <span id="totalCount" class="count-badge">1</span></h2><p id="roomDescription">Start timers manually. The next-start reminder follows your actual start by 8 minutes.</p></div><div class="room-actions"><button class="quiet-button" id="focusView" aria-pressed="false">Focus view</button><button class="quiet-button" id="resetAllBtn">↺ Reset all timers</button></div></section>
+    <section class="upcoming-panel"><div class="monitor-heading"><h2>Next actions</h2><span>Starts · warnings · releases · returns</span></div><div id="upcomingList"></div></section>
+    <section class="start-strip" id="startCues" aria-label="Next prep starts"></section>
+    <section id="finalTrips" class="final-trips" aria-label="Final round release and return reminders" hidden></section>
+    <span class="sr-only" id="warningAnnouncement" role="status"></span>
+    <section class="monitor" aria-label="All speakers"><div class="monitor-heading"><h2>Room overview</h2><span id="boardSummary"></span></div><div class="board-head" aria-hidden="true"><span>Speaker / event</span><span>Time remaining</span><span>Prep status</span><span>Controls</span></div><div id="prepBoard"></div></section>
+    <details class="speaker-details"><summary>Adjust prep durations</summary><div id="speakerGroups"></div></details>
+    <footer><span class="color-key"><span><i class="color-swatch normal" aria-hidden="true"></i>&gt;15 min</span><span><i class="color-swatch yellow" aria-hidden="true"></i>≤15 min</span><span><i class="color-swatch gold" aria-hidden="true"></i>≤10 min</span><span><i class="color-swatch warning" aria-hidden="true"></i>≤5 min</span><span><i class="color-swatch two-minute" aria-hidden="true"></i>≤2 min</span><span><i class="color-swatch urgent" aria-hidden="true"></i>≤1 min</span><span><i class="color-swatch done" aria-hidden="true"></i>Finished</span></span><span id="sessionSummary" aria-live="polite">Ready when you are.</span></footer>
+    <p class="storage-note">Saved on this device. Timers catch up after refresh or sleep; keep this page visible to see warnings.</p>
+    </section>
+    <div id="otherRounds" class="other-rounds" role="status" hidden></div>
+  </main>
+  <dialog id="resetModal"><form method="dialog"><p class="eyebrow">FRESH START</p><h2>Reset every timer?</h2><p>This resets timers, warnings, releases, and return tracking in this round. Other saved rounds stay unchanged.</p><div class="dialog-actions"><button value="cancel" class="quiet-button">Keep prepping</button><button value="reset" class="primary">Reset timers</button></div></form></dialog>
 </body>
 </html>
